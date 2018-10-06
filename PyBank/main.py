@@ -1,8 +1,11 @@
+# Dependencies
+import os
 import csv
+budget = 'budget_data.csv'
 
 # Files to Load
-file_to_load = "Homework/PyBank/budget_data_1.csv"
-file_to_output = "Homework/PyBank/budget_analysis.txt"
+file_to_load = "Resources/budget_data.csv"
+file_to_output = "Resources/budget_analysis.txt"
 
 # Variables to Track
 total_months = 0
@@ -24,15 +27,15 @@ with open(file_to_load) as revenue_data:
 
         # Calculate the totals
         total_months = total_months + 1
-        total_revenue = total_revenue + int(row["Revenue"])
+        total_revenue = total_revenue + int(row["Profit/Losses"])
         # print(row)
 
         # Keep track of changes
-        revenue_change = int(row["Revenue"]) - prev_revenue
+        revenue_change = int(row["Profit/Losses"]) - prev_revenue
         # print(revenue_change)
 
         # Reset the value of prev_revenue to the row I completed my analysis
-        prev_revenue = int(row["Revenue"])
+        prev_revenue = int(row["Profit/Losses"])
         # print(prev_revenue)
 
         # Determine the greatest increase
@@ -45,9 +48,9 @@ with open(file_to_load) as revenue_data:
             greatest_decrease[0] = row["Date"]
 
         # Add to the revenue_changes list
-        revenue_changes.append(int(row["Revenue"]))
+        revenue_changes.append(int(row["Profit/Losses"]))
 
-    # Set the Revenue average
+    # Set the Profits/Losses average
     revenue_avg = sum(revenue_changes) / len(revenue_changes)
     
     # Show Output
@@ -57,17 +60,18 @@ with open(file_to_load) as revenue_data:
     print("Financial Analysis")
     print("-------------------------")
     print("Total Months: " + str(total_months))
-    print("Total Revenue: " + "$" + str(total_revenue))
+    print("Total Profit/Losses: " + "$" + str(total_revenue))
     print("Average Change: " + "$" + str(round(sum(revenue_changes) / len(revenue_changes),2)))
     print("Greatest Increase: " + str(greatest_increase[0]) + " ($" +  str(greatest_increase[1]) + ")") 
     print("Greatest Decrease: " + str(greatest_decrease[0]) + " ($" +  str(greatest_decrease[1]) + ")")
     
 
 
+# Output Files
 with open(file_to_output, "w") as txt_file:
     txt_file.write("Total Months: " + str(total_months))
     txt_file.write("\n")
-    txt_file.write("Total Revenue: " + "$" + str(total_revenue))
+    txt_file.write("Total Profit/Losses: " + "$" + str(total_revenue))
     txt_file.write("\n")
     txt_file.write("Average Change: " + "$" + str(round(sum(revenue_changes) / len(revenue_changes),2)))
     txt_file.write("\n")
